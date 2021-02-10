@@ -51,12 +51,15 @@ function toHex(currencyAmount: CurrencyAmount) {
   return `0x${currencyAmount.raw.toString(16)}`
 }
 
+const ZERO_HEX = '0x0'
+
+/*
+Previous Harmony RPC compatibility helper methods:
 function toNumberString(currencyAmount: CurrencyAmount) {
   return BigNumber.from(toHex(currencyAmount)).toString()
 }
-
-//const ZERO_HEX = '0x0'
 const ZERO_VALUE = '0'
+*/
 
 /**
  * Represents the Uniswap V2 Router, and has static methods for helping execute trades.
@@ -80,8 +83,8 @@ export abstract class Router {
 
     const to: string = validateAndParseAddress(options.recipient)
     // For @harmony-js/core numbers have to be submitted as strings and not in hex format
-    const amountIn: string = toNumberString(trade.maximumAmountIn(options.allowedSlippage))
-    const amountOut: string = toNumberString(trade.minimumAmountOut(options.allowedSlippage))
+    const amountIn: string = toHex(trade.maximumAmountIn(options.allowedSlippage))
+    const amountOut: string = toHex(trade.minimumAmountOut(options.allowedSlippage))
     const path: string[] = trade.route.path.map(token => token.address)
     const deadline = BigNumber.from(
       `0x${(Math.floor(new Date().getTime() / 1000) + options.ttl).toString(16)}`
@@ -102,14 +105,14 @@ export abstract class Router {
           methodName = useFeeOnTransfer ? 'swapExactTokensForETHSupportingFeeOnTransferTokens' : 'swapExactTokensForETH'
           // (uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
           args = [amountIn, amountOut, path, to, deadline]
-          value = ZERO_VALUE
+          value = ZERO_HEX
         } else {
           methodName = useFeeOnTransfer
             ? 'swapExactTokensForTokensSupportingFeeOnTransferTokens'
             : 'swapExactTokensForTokens'
           // (uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
           args = [amountIn, amountOut, path, to, deadline]
-          value = ZERO_VALUE
+          value = ZERO_HEX
         }
         break
       case TradeType.EXACT_OUTPUT:
@@ -123,12 +126,12 @@ export abstract class Router {
           methodName = 'swapTokensForExactETH'
           // (uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
           args = [amountOut, amountIn, path, to, deadline]
-          value = ZERO_VALUE
+          value = ZERO_HEX
         } else {
           methodName = 'swapTokensForExactTokens'
           // (uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
           args = [amountOut, amountIn, path, to, deadline]
-          value = ZERO_VALUE
+          value = ZERO_HEX
         }
         break
     }
