@@ -27,11 +27,11 @@ describe('Router', () => {
         )
         expect(result.methodName).toEqual('swapExactETHForTokens')
         expect(result.args.slice(0, -1)).toEqual([
-          '81',
+          '0x51',
           [WONE[ChainID.HmyMainnet].address, token0.address, token1.address],
           '0x0000000000000000000000000000000000000004'
         ])
-        expect(result.value).toEqual('100')
+        expect(result.value).toEqual('0x64')
         checkDeadline(result.args[result.args.length - 1])
       })
       it('token1 to ether', () => {
@@ -41,12 +41,12 @@ describe('Router', () => {
         )
         expect(result.methodName).toEqual('swapExactTokensForETH')
         expect(result.args.slice(0, -1)).toEqual([
-          '100',
-          '81',
+          '0x64',
+          '0x51',
           [token1.address, token0.address, WONE[ChainID.HmyMainnet].address],
           '0x0000000000000000000000000000000000000004'
         ])
-        expect(result.value).toEqual('0')
+        expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
       })
       it('token0 to token1', () => {
@@ -56,12 +56,12 @@ describe('Router', () => {
         )
         expect(result.methodName).toEqual('swapExactTokensForTokens')
         expect(result.args.slice(0, -1)).toEqual([
-          '100',
-          '89',
+          '0x64',
+          '0x59',
           [token0.address, token1.address],
           '0x0000000000000000000000000000000000000004'
         ])
-        expect(result.value).toEqual('0')
+        expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
       })
     })
@@ -76,11 +76,11 @@ describe('Router', () => {
         )
         expect(result.methodName).toEqual('swapETHForExactTokens')
         expect(result.args.slice(0, -1)).toEqual([
-          '100',
+          '0x64',
           [WONE[ChainID.HmyMainnet].address, token0.address, token1.address],
           '0x0000000000000000000000000000000000000004'
         ])
-        expect(result.value).toEqual('128')
+        expect(result.value).toEqual('0x80')
         checkDeadline(result.args[result.args.length - 1])
       })
       it('token1 to ether', () => {
@@ -90,12 +90,12 @@ describe('Router', () => {
         )
         expect(result.methodName).toEqual('swapTokensForExactETH')
         expect(result.args.slice(0, -1)).toEqual([
-          '100',
-          '128',
+          '0x64',
+          '0x80',
           [token1.address, token0.address, WONE[ChainID.HmyMainnet].address],
           '0x0000000000000000000000000000000000000004'
         ])
-        expect(result.value).toEqual('0')
+        expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
       })
       it('token0 to token1', () => {
@@ -105,12 +105,12 @@ describe('Router', () => {
         )
         expect(result.methodName).toEqual('swapTokensForExactTokens')
         expect(result.args.slice(0, -1)).toEqual([
-          '100',
-          '113',
+          '0x64',
+          '0x71',
           [token0.address, token1.address],
           '0x0000000000000000000000000000000000000004'
         ])
-        expect(result.value).toEqual('0')
+        expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
       })
     })
@@ -122,17 +122,17 @@ describe('Router', () => {
             {
               ttl: 50,
               recipient: '0x0000000000000000000000000000000000000004',
-              allowedSlippage: new Percent('1', '100'),
+              allowedSlippage: new Percent('1', '0x64'),
               feeOnTransfer: true
             }
           )
           expect(result.methodName).toEqual('swapExactETHForTokensSupportingFeeOnTransferTokens')
           expect(result.args.slice(0, -1)).toEqual([
-            '81',
+            '0x51',
             [WONE[ChainID.HmyMainnet].address, token0.address, token1.address],
             '0x0000000000000000000000000000000000000004'
           ])
-          expect(result.value).toEqual('100')
+          expect(result.value).toEqual('0x64')
           checkDeadline(result.args[result.args.length - 1])
         })
         it('token1 to ether', () => {
@@ -144,18 +144,18 @@ describe('Router', () => {
             {
               ttl: 50,
               recipient: '0x0000000000000000000000000000000000000004',
-              allowedSlippage: new Percent('1', '100'),
+              allowedSlippage: new Percent('1', '0x64'),
               feeOnTransfer: true
             }
           )
           expect(result.methodName).toEqual('swapExactTokensForETHSupportingFeeOnTransferTokens')
           expect(result.args.slice(0, -1)).toEqual([
-            '100',
-            '81',
+            '0x64',
+            '0x51',
             [token1.address, token0.address, WONE[ChainID.HmyMainnet].address],
             '0x0000000000000000000000000000000000000004'
           ])
-          expect(result.value).toEqual('0')
+          expect(result.value).toEqual('0x0')
           checkDeadline(result.args[result.args.length - 1])
         })
         it('token0 to token1', () => {
@@ -170,12 +170,12 @@ describe('Router', () => {
           )
           expect(result.methodName).toEqual('swapExactTokensForTokensSupportingFeeOnTransferTokens')
           expect(result.args.slice(0, -1)).toEqual([
-            '100',
-            '89',
+            '0x64',
+            '0x59',
             [token0.address, token1.address],
             '0x0000000000000000000000000000000000000004'
           ])
-          expect(result.value).toEqual('0')
+          expect(result.value).toEqual('0x0')
           checkDeadline(result.args[result.args.length - 1])
         })
       })
